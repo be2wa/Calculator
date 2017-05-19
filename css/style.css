@@ -4,3 +4,41 @@
     border: 0;
     box-sizing: border-box;
 }
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.app {
+    display: flex;
+    flex-wrap: wrap;
+    width: 240px;
+}
+
+.app button, .app div.display-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    border: 1px solid #000000;
+    height: 40px;
+}
+
+.app button {
+    background-color: lightgrey;
+}
+
+.app button:hover {
+    cursor: pointer;
+    background-color: grey;
+}
+
+.app div.display-screen {
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.app button.zero {
+    width: 50%;
+}
