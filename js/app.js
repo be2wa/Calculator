@@ -10,11 +10,11 @@ var equalsBtn = document.querySelector('.equals');
 var firstNumTemp = null;
 var secondNumTemp = null;
 var operandTemp = null;
-var resultNumTemp;
+var indexOfOperandTemp = null;
+var resultNumTemp = null;
 
 function onNumberBtnClick () {
     displayScreen.innerText += this.innerText;
-    shouldDisableComa();
 }
 
 function onClearBtnClick () {
@@ -22,7 +22,7 @@ function onClearBtnClick () {
 }
 
 function onDeleteBtnClick () {
-    var displayAfterDelete = displayScreen.innerText.split('').slice(0, -1).join('');
+    var displayAfterDelete = displayScreen.innerText.slice(0, -1);
     displayScreen.innerText = displayAfterDelete;
 }
 
@@ -37,18 +37,8 @@ function onPlusMinusBtnClick () {
 }
 
 function onComaBtnClick () {
-    if ((displayScreen.innerText.indexOf('.') == -1 || displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1)) {
-        displayScreen.innerText += '.';
-    }
-    shouldDisableComa();
-}
-
-function shouldDisableComa () {
-    if (displayScreen.innerText.replace(/[^\.]/g, "").length >= 2) {
-        comaBtn.disabled = true;
-    } else if (displayScreen.innerText.replace(/[^\.]/g, "").length >= 1 && (displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1)) {
-        comaBtn.disabled = false;
-    }
+    displayScreen.innerText += '.';
+    comaBtn.disabled = true;
 }
 
 function onOperandBtnsClick () {
@@ -56,6 +46,7 @@ function onOperandBtnsClick () {
         firstNumTemp = displayScreen.innerText;
         displayScreen.innerText += this.innerText;
         operandTemp = this.innerText;
+        comaBtn.disabled = false;
         console.log(firstNumTemp);
         console.log(operandTemp);
     }
@@ -63,7 +54,6 @@ function onOperandBtnsClick () {
 
 function onEqualsBtnClick () {
     if (firstNumTemp && operandTemp) {
-        var indexOfOperand;
         
         if (displayScreen.innerText.indexOf('+') !== -1) {
             indexOfOperand = displayScreen.innerText.indexOf('+');
@@ -77,8 +67,8 @@ function onEqualsBtnClick () {
         secondNumTemp = displayScreen.innerText.substr(indexOfOperand+1);
         console.log(secondNumTemp);
         
-        var parsedFirstNumTemp = parseInt(firstNumTemp);
-        var parsedSecondNumTemp = parseInt(secondNumTemp);
+        var parsedFirstNumTemp = Number(firstNumTemp);
+        var parsedSecondNumTemp = Number(secondNumTemp);
         
         if (secondNumTemp) {
             switch (operandTemp) {
@@ -104,6 +94,7 @@ function onEqualsBtnClick () {
     secondNumTemp = null;
     operandTemp = null;
     comaBtn.disabled = false;
+    indexOfOperand = null;
 }
 
 for (var i = 0; i < numberBtns.length; i++) {

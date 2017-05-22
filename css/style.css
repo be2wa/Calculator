@@ -7,13 +7,16 @@
 
 body {
     display: flex;
+    align-items: center;
     justify-content: center;
+    height: 100vh;
 }
 
 .app {
     display: flex;
     flex-wrap: wrap;
     width: 240px;
+    border: 1px solid #000000;
 }
 
 .app button, .app div.display-screen {
