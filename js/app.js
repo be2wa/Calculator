@@ -5,10 +5,15 @@ var deleteBtn = document.querySelector('.delete-last');
 var plusMinusBtn = document.querySelector('.plus-minus');
 var comaBtn = document.querySelector('.coma');
 var operandBtns = document.querySelectorAll('.operand');
+var equalsBtn = document.querySelector('.equals');
+
+var firstNumTemp = null;
+var secondNumTemp = null;
 var operandTemp = null;
 
 function onNumberBtnClick () {
     displayScreen.innerText += this.innerText;
+    shouldDisableComa();
 }
 
 function onClearBtnClick () {
@@ -31,17 +36,38 @@ function onPlusMinusBtnClick () {
 }
 
 function onComaBtnClick () {
-    if (displayScreen.innerText.indexOf('.') == -1) {
+    if ((displayScreen.innerText.indexOf('.') == -1 || displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1) ) {
+        
         displayScreen.innerText += '.';
+    }
+    shouldDisableComa();
+}
+
+function shouldDisableComa () {
+    if (displayScreen.innerText.replace(/[^\.]/g, "").length >= 2) {
+        comaBtn.disabled = true;
     }
 }
 
 function onOperandBtnsClick () {
     if (!operandTemp) {
+        firstNumTemp = displayScreen.innerText;
         displayScreen.innerText += this.innerText;
         operandTemp = this.innerText;
+        console.log(firstNumTemp);
         console.log(operandTemp);
+    }
+}
+
+function onEqualsBtnClick () {
+    if (firstNumTemp && operandTemp) {
+        secondNumTemp = displayScreen.innerText.split('');
+        console.log(secondNumTemp);
         
+//        firstNumTemp = null;
+//        secondNumTemp = null;
+//        operandTemp = null;
+//        comaBtn.disabled = false;
     }
 }
 
@@ -60,3 +86,5 @@ deleteBtn.addEventListener('click', onDeleteBtnClick);
 plusMinusBtn.addEventListener('click', onPlusMinusBtnClick);
 
 comaBtn.addEventListener('click', onComaBtnClick);
+
+equalsBtn.addEventListener('click', onEqualsBtnClick);
