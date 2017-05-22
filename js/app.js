@@ -36,7 +36,7 @@ function onPlusMinusBtnClick () {
 }
 
 function onComaBtnClick () {
-    if ((displayScreen.innerText.indexOf('.') == -1 || displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1) ) {
+    if ((displayScreen.innerText.indexOf('.') == -1 || displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1)) {
         
         displayScreen.innerText += '.';
     }
@@ -44,7 +44,7 @@ function onComaBtnClick () {
 }
 
 function shouldDisableComa () {
-    if (displayScreen.innerText.replace(/[^\.]/g, "").length >= 2) {
+    if ((displayScreen.innerText.replace(/[^\.]/g, "").length >= 2) || (displayScreen.innerText.replace(/[^\.]/g, "").length >= 1 && (displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1))) {
         comaBtn.disabled = true;
     }
 }
