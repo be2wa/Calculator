@@ -10,6 +10,7 @@ var equalsBtn = document.querySelector('.equals');
 var firstNumTemp = null;
 var secondNumTemp = null;
 var operandTemp = null;
+var resultNumTemp;
 
 function onNumberBtnClick () {
     displayScreen.innerText += this.innerText;
@@ -37,15 +38,16 @@ function onPlusMinusBtnClick () {
 
 function onComaBtnClick () {
     if ((displayScreen.innerText.indexOf('.') == -1 || displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1)) {
-        
         displayScreen.innerText += '.';
     }
     shouldDisableComa();
 }
 
 function shouldDisableComa () {
-    if ((displayScreen.innerText.replace(/[^\.]/g, "").length >= 2) || (displayScreen.innerText.replace(/[^\.]/g, "").length >= 1 && (displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1))) {
+    if (displayScreen.innerText.replace(/[^\.]/g, "").length >= 2) {
         comaBtn.disabled = true;
+    } else if (displayScreen.innerText.replace(/[^\.]/g, "").length >= 1 && (displayScreen.innerText.indexOf('+') !== -1 || displayScreen.innerText.indexOf('-') !== -1 || displayScreen.innerText.indexOf('*') !== -1 || displayScreen.innerText.indexOf('/') !== -1)) {
+        comaBtn.disabled = false;
     }
 }
 
@@ -61,14 +63,47 @@ function onOperandBtnsClick () {
 
 function onEqualsBtnClick () {
     if (firstNumTemp && operandTemp) {
-        secondNumTemp = displayScreen.innerText.split('');
+        var indexOfOperand;
+        
+        if (displayScreen.innerText.indexOf('+') !== -1) {
+            indexOfOperand = displayScreen.innerText.indexOf('+');
+        } else if (displayScreen.innerText.indexOf('-') !== -1) {
+            indexOfOperand = displayScreen.innerText.indexOf('-');
+        } else if (displayScreen.innerText.indexOf('*') !== -1) {
+            indexOfOperand = displayScreen.innerText.indexOf('*');
+        } else if (displayScreen.innerText.indexOf('/') !== -1) {
+            indexOfOperand = displayScreen.innerText.indexOf('/');
+        }
+        secondNumTemp = displayScreen.innerText.substr(indexOfOperand+1);
         console.log(secondNumTemp);
         
-//        firstNumTemp = null;
-//        secondNumTemp = null;
-//        operandTemp = null;
-//        comaBtn.disabled = false;
+        var parsedFirstNumTemp = parseInt(firstNumTemp);
+        var parsedSecondNumTemp = parseInt(secondNumTemp);
+        
+        if (secondNumTemp) {
+            switch (operandTemp) {
+                case '+':
+                    resultNumTemp = parsedFirstNumTemp + parsedSecondNumTemp;
+                    break;
+                case '-':
+                    resultNumTemp = parsedFirstNumTemp - parsedSecondNumTemp;
+                    break;
+                case '*':
+                    resultNumTemp = parsedFirstNumTemp * parsedSecondNumTemp;
+                    break;
+                case '/':
+                    resultNumTemp = parsedFirstNumTemp / parsedSecondNumTemp;
+                    break;
+            }
+            console.log(parsedFirstNumTemp);
+            console.log(parsedSecondNumTemp);
+            displayScreen.innerText = resultNumTemp;
+        }
     }
+    firstNumTemp = null;
+    secondNumTemp = null;
+    operandTemp = null;
+    comaBtn.disabled = false;
 }
 
 for (var i = 0; i < numberBtns.length; i++) {
