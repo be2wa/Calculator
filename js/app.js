@@ -19,6 +19,11 @@ function onNumberBtnClick () {
 
 function onClearBtnClick () {
     displayScreen.innerText = "";
+    firstNumTemp = null;
+    secondNumTemp = null;
+    operandTemp = null;
+    comaBtn.disabled = false;
+    indexOfOperand = null;
 }
 
 function onDeleteBtnClick () {
@@ -79,10 +84,10 @@ function onEqualsBtnClick () {
                     resultNumTemp = parsedFirstNumTemp - parsedSecondNumTemp;
                     break;
                 case '*':
-                    resultNumTemp = parsedFirstNumTemp * parsedSecondNumTemp;
+                    resultNumTemp = (parsedFirstNumTemp * parsedSecondNumTemp) * 10 / 10;
                     break;
                 case '/':
-                    resultNumTemp = parsedFirstNumTemp / parsedSecondNumTemp;
+                    resultNumTemp = (parsedFirstNumTemp / parsedSecondNumTemp) * 10 / 10;
                     break;
             }
             console.log(parsedFirstNumTemp);
